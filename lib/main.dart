@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   }
 
   void sendEmail() {
-    _launchUrl(Uri.parse('mailto:IbrahimAlbarzi@gmail.com'));
+    _launchUrl(Uri.parse('mailto:ibrahimalbarzi.e@gmail.com'));
   }
 
   void openWhatsApp() {
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: InkWell(
-                  splashColor: Colors.blue.withOpacity(0.2),
+                  splashColor: Colors.blue.withAlpha(51),
                   onTap: callPhone,
                   child: ListTile(
                     leading: Icon(Icons.phone, color: Colors.blue),
@@ -99,7 +99,12 @@ class MyApp extends StatelessWidget {
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: InkWell(
-                  splashColor: Colors.red.withOpacity(0.2),
+                  splashColor: const Color.fromARGB(
+                    255,
+                    6,
+                    132,
+                    141,
+                  ).withAlpha(51),
                   onTap: sendEmail,
                   child: ListTile(
                     leading: Icon(Icons.email, color: Colors.red),
@@ -112,7 +117,7 @@ class MyApp extends StatelessWidget {
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: InkWell(
-                  splashColor: Colors.green.withOpacity(0.2),
+                  splashColor: Colors.green.withAlpha(51),
                   onTap: openWhatsApp,
                   child: ListTile(
                     leading: Icon(
