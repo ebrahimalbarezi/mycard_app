@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,6 +8,39 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  // فتح الاتصال
+  Future<void> _callPhone(String phoneNumber) async {
+    final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  // فتح البريد
+  Future<void> _sendEmail(String email) async {
+    final Uri uri = Uri(scheme: 'mailto', path: email);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _launchUrl(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void callPhone() {
+    _launchUrl(Uri.parse('tel:967774936845'));
+  }
+
+  void sendEmail() {
+    _launchUrl(Uri.parse('mailto:IbrahimAlbarzi@gmail.com'));
+  }
+
+  void openWhatsApp() {
+    _launchUrl(Uri.parse('https://wa.me/967774936845'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,67 +53,86 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 50.0,
+                radius: 50,
                 backgroundImage: AssetImage('images/my_image.png'),
               ),
+
+              SizedBox(height: 10),
+
               Text(
                 'ابرهيم البارزي',
                 style: TextStyle(
                   fontFamily: 'Cairo',
-                  fontSize: 30.0,
+                  fontSize: 30,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              //SizedBox(height: 10.0),
+
               Text(
                 'مهندس برمجيات',
                 style: TextStyle(
                   fontFamily: 'Cairo',
-                  fontSize: 20.0,
-                  color: Colors.white60,
+                  fontSize: 18,
+                  color: Colors.white70,
                   letterSpacing: 2,
-                  fontWeight: FontWeight.w400,
                 ),
-              ),
-              SizedBox(
-                height: 30.0,
-                width: 150.0,
-                child: Divider(color: Colors.white60),
               ),
 
+              SizedBox(height: 30),
+              Divider(color: Colors.white60, indent: 80, endIndent: 80),
+
+              // 📞 هاتف
               Card(
-                margin: EdgeInsets.all(10.0),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.phone,
-                    color: const Color.fromARGB(255, 5, 114, 156),
-                  ),
-                  title: Text(
-                    '967 774 936 845',
-                    style: TextStyle(
-                      fontFamily: 'Cairo',
-                      fontSize: 20.0,
-                      color: const Color.fromARGB(255, 8, 0, 0),
-                    ),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: InkWell(
+                  splashColor: Colors.blue.withOpacity(0.2),
+                  onTap: callPhone,
+                  child: ListTile(
+                    leading: Icon(Icons.phone, color: Colors.blue),
+                    title: Text('967 774 936 845'),
                   ),
                 ),
               ),
+
+              // ✉️ بريد
               Card(
-                margin: EdgeInsets.all(10.0),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.email,
-                    color: const Color.fromARGB(255, 6, 104, 143),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: InkWell(
+                  splashColor: Colors.red.withOpacity(0.2),
+                  onTap: sendEmail,
+                  child: ListTile(
+                    leading: Icon(Icons.email, color: Colors.red),
+                    title: Text('IbrahimAlbarzi@gmail.com'),
                   ),
-                  title: Text(
-                    'IbrahimAlbarzi@gmail.com',
-                    style: TextStyle(
-                      fontFamily: 'cairo',
-                      fontSize: 20.0,
-                      color: Colors.black,
+                ),
+              ),
+
+              // 🟢 واتساب
+              Card(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: InkWell(
+                  splashColor: Colors.green.withOpacity(0.2),
+                  onTap: openWhatsApp,
+                  child: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.whatsapp,
+                      color: Colors.green,
                     ),
+
+                    title: Text('تواصل عبر واتساب'),
                   ),
+                ),
+              ),
+
+              Spacer(),
+
+              // ©️ حقوق النشر
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  '© 2026 – Ibrahim Albarzi',
+                  style: TextStyle(color: Colors.white60, fontSize: 12),
                 ),
               ),
             ],
@@ -88,38 +142,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-        // Row(
-        //             children: [
-        //               Icon(
-        //                 Icons.email,
-        //                 color: const Color.fromARGB(255, 6, 104, 143),
-        //               ),
-        //               SizedBox(width: 10.0),
-        //               Text(
-        //                 'Albarzi@gmail.com',
-        //                 style: TextStyle(
-        //                   fontFamily: 'cairo',
-        //                   fontSize: 20.0,
-        //                   color: Colors.black,
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //  child: Row(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.phone,
-        //                     color: const Color.fromARGB(255, 5, 114, 156),
-        //                   ),
-        //                   SizedBox(width: 10.0),
-        //                   Text(
-        //                     '967 774 936 845',
-        //                     style: TextStyle(
-        //                       fontFamily: 'Cairo',
-        //                       fontSize: 20.0,
-        //                       color: const Color.fromARGB(255, 8, 0, 0),
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
